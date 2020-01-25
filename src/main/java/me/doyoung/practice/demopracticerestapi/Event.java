@@ -2,9 +2,7 @@ package me.doyoung.practice.demopracticerestapi;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Builder
@@ -19,8 +17,8 @@ import java.time.LocalDateTime;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;            // 기본 키
+    @GeneratedValue
+    private Integer id;            // 기본 키
     private String name;        // 경매 이름
     private String description; // 경매에 대한 설명
     private LocalDateTime beginEnrollmentDateTime;      // 경매 등록 날짜
@@ -32,6 +30,8 @@ public class Event {
     private int maxPrice;               // 최대 가격 (경매가가 최대 가격과 같으면 바로 낙찰)
     private int limitOfEnrollment;      // 최대 등록 횟수
     private Boolean free;               // 무료
+
+    @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;    // 경매 물품에 대한 진행 상태(draft -> published -> begin_enrollment -> ..)
 
 }
