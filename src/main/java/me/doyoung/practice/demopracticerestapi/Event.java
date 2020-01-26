@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 // 코드 내에서 stack overflow가 발생할 수 있다.
 // 따라서, id만 equal and hashcode를 하여 이를 방지한다.
 @EqualsAndHashCode(of = "id")
+@Entity
 public class Event {
 
     @Id
@@ -29,8 +30,8 @@ public class Event {
     private int basePrice;              // 최소 가격
     private int maxPrice;               // 최대 가격 (경매가가 최대 가격과 같으면 바로 낙찰)
     private int limitOfEnrollment;      // 최대 등록 횟수
-    private Boolean free;               // 무료
-    private Boolean offline;
+    private boolean free;               // 무료
+    private boolean offline;
 
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;    // 경매 물품에 대한 진행 상태(draft -> published -> begin_enrollment -> ..)
