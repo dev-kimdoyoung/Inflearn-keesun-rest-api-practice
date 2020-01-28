@@ -49,17 +49,11 @@ public class EventControllerTest {
                 .eventStatus(EventStatus.PUBLISHED)
                 .build();
 
-        mockMvc.perform(post("/api/events/")
+        mockMvc.perform(post("/api/events")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(objectMapper.writeValueAsString(event))
                 .accept(MediaTypes.HAL_JSON))
-                .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").exists())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
-                .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()));
+                .andDo(print());
 
     }
 
@@ -89,5 +83,20 @@ public class EventControllerTest {
                 .andDo(print())
                 .andExpect(status().isBadRequest());
 
+    }
+
+    /**
+     * eventDto에 필수로 입력해야 하는 값을 넣어야 함에도 불구하고, 입력되지 않은 request가 들어올 때
+     * @Valid, @BindingResult
+     * @throws Exception
+     */
+    @Test
+    public void createEvent_Bad_Request_Empty_Input() throws Exception {
+        EventDto eventDto = EventDto.builder().build();
+
+        this.mockMvc.perform(post("/api/events")
+                    .contentType(MediaType.APPLICATION_JSON_UTF8)
+                    .content(this.objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isBadRequest());
     }
 }
