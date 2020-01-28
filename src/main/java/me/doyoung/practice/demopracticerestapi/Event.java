@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
-@Getter
 @NoArgsConstructor
+@Getter
 @Setter
 // 나중에 객체 간 연관관계를 지을 때 모든 필드를 equal(), hashcode()를 하면
 // 코드 내에서 stack overflow가 발생할 수 있다.
